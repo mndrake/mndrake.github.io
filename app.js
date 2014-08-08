@@ -1,12 +1,22 @@
 var app = angular.module('app', []);
 
 app.factory('NED', function($http) {
-    return {
+    var NED = {
         async: function(point) {
-            return $http.get('http://www.corsproxy.com/ned.usgs.gov/epqs/pqs.php?x=' + point.lon + '&y=' + point.lat + '&units=Meters&output=json')
-            .then(function (response) { return response.data.USGS_Elevation_Point_Query_Service.Elevation_Query.Elevation; });
+            var url = "http://ned.usgs.gov/epqs/pqs.php?callback=JSON_CALLBACK";
+            var promise = $http.jsonp(url, { 
+                params: {
+                    x: point.lon,
+                    y: point.lat,
+                    units: "Meters",
+                    output: "json"
+                }}).then(function (response) {
+                return response.data.USGS_Elevation_Point_Query_Service.Elevation_Query.Elevation
+            });            
+            return promise;
         }
     };
+    return NED;
 });
 
 Number.prototype.toRad = function() { return this * Math.PI / 180; }
