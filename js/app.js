@@ -63,7 +63,7 @@
     return $scope.getRelativeElevation = function() {
       var getElevation, totalPoints, updateRelativeElevation;
       totalPoints = 8;
-      $scope.point = new LatLon($scope.lat, $scope.lon);
+      $scope.point = new LatLon(Number($scope.lat), Number($scope.lon));
       $scope.points = _.range(totalPoints).map(function(t) {
         return $scope.point.destinationPoint(t * 360 / totalPoints, $scope.distance);
       });
