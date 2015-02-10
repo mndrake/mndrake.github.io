@@ -27,7 +27,7 @@ app.controller 'MainCtrl', (NED, $scope) ->
   $scope.distance = 0.1
   $scope.getRelativeElevation = ->
     totalPoints = 8
-    $scope.point = new LatLon($scope.lat, $scope.lon)
+    $scope.point = new LatLon(Number($scope.lat), Number($scope.lon))
     $scope.points = _.range(totalPoints).map (t) -> $scope.point.destinationPoint(t*360/totalPoints, $scope.distance)
     updateRelativeElevation = ->
       averageElevation = _.reduce($scope.points, ((memo, num) -> memo + num.height), 0) / totalPoints
